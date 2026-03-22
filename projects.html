@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Projects | Mohammad Dagamseh</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: { sans: ['Cairo', 'Inter', 'sans-serif'] },
+                    colors: { primary: '#3b82f6', darkbg: '#0f172a', darkcard: '#1e293b' }
+                }
+            }
+        }
+    </script>
+    <style>
+        html { scroll-behavior: smooth; }
+        .glass-nav { backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); }
+        .project-card:hover .project-overlay { opacity: 1; }
+    </style>
+</head>
+<body class="bg-gray-50 text-slate-800 dark:bg-darkbg dark:text-slate-200 font-sans antialiased">
+
+    <!-- Navbar -->
+    <nav class="fixed w-full z-50 glass-nav bg-white/80 dark:bg-darkbg/80 border-b border-gray-200 dark:border-slate-700">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <a href="index.html" class="flex items-center gap-2 text-primary font-bold hover:opacity-80 transition-opacity">
+                    <i class="fas fa-arrow-right"></i>
+                    <span data-i18n="nav_back">العودة للرئيسية</span>
+                </a>
+                <div class="flex items-center gap-4">
+                    <button id="langToggle" class="text-sm font-semibold hover:text-primary transition-colors">EN</button>
+                    <button id="themeToggle" class="p-2 rounded-full hover:bg-gray-200 dark:hover:bg-slate-700 transition-colors">
+                        <i class="fas fa-moon dark:hidden"></i>
+                        <i class="fas fa-sun hidden dark:block text-yellow-400"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Header Section -->
+    <header class="pt-32 pb-10 px-4 text-center">
+        <h1 class="text-4xl md:text-5xl font-bold text-slate-900 dark:text-white mb-4" data-i18n="page_title">معرض المشاريع</h1>
+        <p class="text-slate-600 dark:text-slate-400 max-w-2xl mx-auto" data-i18n="page_subtitle">هنا تجد خلاصة تجاربي البرمجية في الأنظمة المدمجة، تطوير البرمجيات، وتصميم الويب.</p>
+    </header>
+
+    <!-- Projects Grid -->
+    <main class="max-w-6xl mx-auto px-4 py-12">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+            
+            <!-- Project: Snake Game -->
+            <div class="bg-white dark:bg-darkcard rounded-3xl overflow-hidden shadow-xl border border-gray-100 dark:border-slate-700 flex flex-col">
+                <div class="h-64 bg-slate-900 flex items-center justify-center relative overflow-hidden group">
+                    <i class="fas fa-terminal text-7xl text-blue-500 group-hover:scale-110 transition-transform duration-500"></i>
+                    <div class="absolute bottom-4 left-4 flex gap-2">
+                        <span class="bg-blue-600 text-white text-xs px-3 py-1 rounded-full">C++</span>
+                        <span class="bg-indigo-600 text-white text-xs px-3 py-1 rounded-full">OOP</span>
+                    </div>
+                </div>
+                <div class="p-8 flex-1 flex flex-col">
+                    <h3 class="text-2xl font-bold mb-4 text-slate-900 dark:text-white" data-i18n="p1_title">Snake Game (Console + Login System)</h3>
+                    <p class="text-slate-600 dark:text-slate-400 mb-6 leading-relaxed" data-i18n="p1_desc">
+                        تطوير لعبة "الأفعى" الكلاسيكية داخل بيئة الـ Console. المشروع ليس مجرد لعبة، بل تطبيق عملي لمفاهيم OOP المعقدة. يتضمن نظام تسجيل دخول متكامل (Login System) يحفظ بيانات اللاعبين، مع خوارزميات للتحكم في سرعة اللعبة وتحديث واجهة الأوامر بشكل سلس.
+                    </p>
+                    <div class="mt-auto">
+                        <a href="https://github.com/mhmd-dagamseh/Snake-Game-CPP" target="_blank" class="inline-flex items-center gap-2 text-primary font-bold hover:underline">
+                            <i class="fab fa-github"></i> <span data-i18n="btn_code">عرض الكود المصدري</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Project: Sumo Robot -->
+            <div class="bg-white dark:bg-darkcard rounded-3xl overflow-hidden shadow-xl border border-gray-100 dark:border-slate-700 flex flex-col">
+                <div class="h-64 bg-emerald-950 flex items-center justify-center relative group">
+                    <i class="fas fa-robot text-7xl text-emerald-500 group-hover:scale-110 transition-transform duration-500"></i>
+                    <div class="absolute bottom-4 left-4 flex gap-2">
+                        <span class="bg-emerald-600 text-white text-xs px-3 py-1 rounded-full">Arduino</span>
+                        <span class="bg-orange-600 text-white text-xs px-3 py-1 rounded-full">Automation</span>
+                    </div>
+                </div>
+                <div class="p-8 flex-1 flex flex-col">
+                    <h3 class="text-2xl font-bold mb-4 text-slate-900 dark:text-white" data-i18n="p2_title">Autonomous Sumo Robot (Dyno)</h3>
+                    <p class="text-slate-600 dark:text-slate-400 mb-6 leading-relaxed" data-i18n="p2_desc">
+                        بناء وبرمجة روبوت سومو آلي بالكامل للمنافسات. استخدمت لوحة Arduino مع مجموعة من حساسات الـ Ultrasonic و IR لكشف الخصوم وتجنب الخروج من الحلبة. يتميز الروبوت بخوارزمية هجومية ودفاعية ذكية تعتمد على رد الفعل السريع للمحركات.
+                    </p>
+                    <div class="mt-auto">
+                        <a href="https://github.com/mhmd-dagamseh/Dyno-Sumo-Robot" target="_blank" class="inline-flex items-center gap-2 text-primary font-bold hover:underline">
+                            <i class="fab fa-github"></i> <span data-i18n="btn_code">عرض الكود المصدري</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Web Design Skills Section -->
+        <section class="mt-20 bg-gradient-to-br from-blue-600 to-indigo-700 rounded-3xl p-8 md:p-12 text-white shadow-2xl">
+            <div class="flex flex-col md:flex-row items-center gap-12">
+                <div class="flex-1 space-y-6">
+                    <h2 class="text-3xl font-bold" data-i18n="web_title">مهارات تصميم المواقع (Web Design)</h2>
+                    <p class="text-blue-100 leading-relaxed text-lg" data-i18n="web_desc">
+                        رغم تركيزي على البرمجة الهندسية، إلا أنني أمتلك حساً إبداعياً في تصميم واجهات المستخدم (UI/UX). أستخدم أدوات مثل **Tailwind CSS** و **HTML5/JS** لبناء مواقع متجاوبة، سريعة، وذات طابع عصري. أهتم جداً بتفاصيل تجربة المستخدم (UX) لضمان سهولة الوصول والجمالية في آن واحد.
+                    </p>
+                    <ul class="grid grid-cols-2 gap-4">
+                        <li class="flex items-center gap-2"><i class="fas fa-check-circle text-blue-300"></i> Responsive Design</li>
+                        <li class="flex items-center gap-2"><i class="fas fa-check-circle text-blue-300"></i> UI/UX Principles</li>
+                        <li class="flex items-center gap-2"><i class="fas fa-check-circle text-blue-300"></i> Tailwind CSS Expert</li>
+                        <li class="flex items-center gap-2"><i class="fas fa-check-circle text-blue-300"></i> Modern Animations</li>
+                    </ul>
+                </div>
+                <div class="flex-1 flex justify-center">
+                    <div class="grid grid-cols-2 gap-4">
+                        <div class="w-24 h-24 bg-white/10 rounded-2xl flex items-center justify-center text-4xl"><i class="fab fa-html5"></i></div>
+                        <div class="w-24 h-24 bg-white/10 rounded-2xl flex items-center justify-center text-4xl"><i class="fab fa-css3-alt"></i></div>
+                        <div class="w-24 h-24 bg-white/10 rounded-2xl flex items-center justify-center text-4xl"><i class="fab fa-js"></i></div>
+                        <div class="w-24 h-24 bg-white/10 rounded-2xl flex items-center justify-center text-4xl"><i class="fas fa-palette"></i></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="py-12 text-center border-t border-gray-200 dark:border-slate-800">
+        <p class="text-slate-500 text-sm">&copy; 2026 Mohammad Dagamseh. Engineering & Design Excellence.</p>
+    </footer>
+
+    <script>
+        const translations = {
+            "ar": {
+                "nav_back": "العودة للرئيسية",
+                "page_title": "معرض المشاريع",
+                "page_subtitle": "هنا تجد خلاصة تجاربي البرمجية في الأنظمة المدمجة، تطوير البرمجيات، وتصميم الويب.",
+                "p1_title": "لعبة Snake (نظام متكامل C++)",
+                "p1_desc": "تطوير لعبة الأفعى داخل بيئة Console مع تطبيق كامل لمفاهيم OOP ونظام تسجيل دخول آمن.",
+                "p2_title": "روبوت سومو آلي (Dyno)",
+                "p2_desc": "روبوت مصمم للمنافسات يعتمد على Arduino وحساسات ذكية لاتخاذ قرارات قتالية في الحلبة.",
+                "btn_code": "عرض الكود المصدري",
+                "web_title": "مهارات تصميم المواقع",
+                "web_desc": "أستخدم Tailwind CSS و HTML5 لبناء واجهات عصرية ومتجاوبة تخدم تجربة المستخدم."
+            },
+            "en": {
+                "nav_back": "Back to Home",
+                "page_title": "Project Gallery",
+                "page_subtitle": "A showcase of my expertise in Embedded Systems, Software Development, and Web Design.",
+                "p1_title": "Snake Game (C++ OOP System)",
+                "p1_desc": "Classic Snake game developed in Console with full OOP application and a secure login system.",
+                "p2_title": "Autonomous Sumo Robot (Dyno)",
+                "p2_desc": "Competition-grade robot using Arduino and smart sensors for real-time tactical decisions.",
+                "btn_code": "View Source Code",
+                "web_title": "Web Design Skills",
+                "web_desc": "I leverage Tailwind CSS and HTML5 to build modern, responsive interfaces focused on UX."
+            }
+        };
+
+        let currentLang = 'ar';
+        const themeToggleBtn = document.getElementById('themeToggle');
+        const langToggleBtn = document.getElementById('langToggle');
+        const htmlElement = document.documentElement;
+
+        themeToggleBtn.addEventListener('click', () => htmlElement.classList.toggle('dark'));
+
+        langToggleBtn.addEventListener('click', () => {
+            currentLang = currentLang === 'ar' ? 'en' : 'ar';
+            langToggleBtn.textContent = currentLang === 'ar' ? 'EN' : 'عربي';
+            htmlElement.setAttribute('dir', currentLang === 'ar' ? 'rtl' : 'ltr');
+            htmlElement.setAttribute('lang', currentLang);
+            document.querySelectorAll('[data-i18n]').forEach(element => {
+                const key = element.getAttribute('data-i18n');
+                if (translations[currentLang][key]) element.textContent = translations[currentLang][key];
+            });
+        });
+    </script>
+</body>
+</html>
