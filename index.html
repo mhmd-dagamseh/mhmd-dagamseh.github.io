@@ -1,858 +1,239 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ar" dir="rtl" class="dark">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Mohammad Dagamseh — Software Engineer</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Syne:wght@400;600;700;800&display=swap" rel="stylesheet">
-<style>
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-  :root {
-    --bg: #0a0a0f;
-    --surface: #111118;
-    --surface2: #16161f;
-    --border: rgba(255,255,255,0.07);
-    --accent: #00ffd0;
-    --accent2: #7b61ff;
-    --accent3: #ff6b35;
-    --text: #e8e8f0;
-    --muted: #6b6b80;
-    --font-display: 'Syne', sans-serif;
-    --font-mono: 'Space Mono', monospace;
-  }
-
-  html { scroll-behavior: smooth; }
-
-  body {
-    background: var(--bg);
-    color: var(--text);
-    font-family: var(--font-mono);
-    min-height: 100vh;
-    overflow-x: hidden;
-    cursor: none;
-  }
-
-  /* Custom cursor */
-  .cursor {
-    position: fixed;
-    width: 12px; height: 12px;
-    background: var(--accent);
-    border-radius: 50%;
-    pointer-events: none;
-    z-index: 9999;
-    transition: transform 0.15s ease, opacity 0.15s;
-    mix-blend-mode: screen;
-  }
-  .cursor-ring {
-    position: fixed;
-    width: 36px; height: 36px;
-    border: 1px solid var(--accent);
-    border-radius: 50%;
-    pointer-events: none;
-    z-index: 9998;
-    transition: transform 0.35s cubic-bezier(.175,.885,.32,1.275), opacity 0.2s;
-    opacity: 0.4;
-  }
-
-  /* Noise overlay */
-  body::before {
-    content: '';
-    position: fixed; inset: 0;
-    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
-    opacity: 0.035;
-    pointer-events: none;
-    z-index: 1000;
-  }
-
-  /* Grid lines */
-  body::after {
-    content: '';
-    position: fixed; inset: 0;
-    background-image:
-      linear-gradient(rgba(0,255,208,0.03) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(0,255,208,0.03) 1px, transparent 1px);
-    background-size: 60px 60px;
-    pointer-events: none;
-    z-index: 0;
-  }
-
-  /* ——— HEADER ——— */
-  header {
-    position: relative;
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    padding: 80px 6vw;
-    overflow: hidden;
-    z-index: 1;
-  }
-
-  .header-bg-text {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    font-family: var(--font-display);
-    font-size: clamp(80px, 18vw, 220px);
-    font-weight: 800;
-    color: transparent;
-    -webkit-text-stroke: 1px rgba(0,255,208,0.07);
-    white-space: nowrap;
-    pointer-events: none;
-    user-select: none;
-    letter-spacing: -0.04em;
-  }
-
-  .badge {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    font-size: 11px;
-    letter-spacing: 0.15em;
-    text-transform: uppercase;
-    color: var(--accent);
-    border: 1px solid rgba(0,255,208,0.3);
-    padding: 6px 14px;
-    border-radius: 2px;
-    margin-bottom: 32px;
-    width: fit-content;
-    animation: fadeUp 0.8s ease forwards;
-    opacity: 0;
-  }
-  .badge::before {
-    content: '';
-    width: 6px; height: 6px;
-    background: var(--accent);
-    border-radius: 50%;
-    animation: pulse 2s infinite;
-  }
-
-  @keyframes pulse {
-    0%, 100% { opacity: 1; transform: scale(1); }
-    50% { opacity: 0.4; transform: scale(0.7); }
-  }
-
-  h1 {
-    font-family: var(--font-display);
-    font-size: clamp(42px, 8vw, 96px);
-    font-weight: 800;
-    line-height: 0.95;
-    letter-spacing: -0.03em;
-    animation: fadeUp 0.8s 0.15s ease forwards;
-    opacity: 0;
-  }
-
-  h1 .first { display: block; color: var(--text); }
-  h1 .last {
-    display: block;
-    color: transparent;
-    -webkit-text-stroke: 2px var(--accent);
-  }
-
-  .tagline {
-    margin-top: 24px;
-    font-size: clamp(13px, 1.8vw, 16px);
-    color: var(--muted);
-    max-width: 480px;
-    line-height: 1.8;
-    animation: fadeUp 0.8s 0.3s ease forwards;
-    opacity: 0;
-  }
-
-  .header-links {
-    display: flex;
-    gap: 16px;
-    flex-wrap: wrap;
-    margin-top: 48px;
-    animation: fadeUp 0.8s 0.45s ease forwards;
-    opacity: 0;
-  }
-
-  .btn {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    padding: 12px 24px;
-    font-family: var(--font-mono);
-    font-size: 12px;
-    letter-spacing: 0.08em;
-    text-decoration: none;
-    border-radius: 2px;
-    transition: all 0.25s ease;
-    cursor: none;
-  }
-
-  .btn-primary {
-    background: var(--accent);
-    color: #000;
-    font-weight: 700;
-  }
-  .btn-primary:hover {
-    background: #fff;
-    transform: translate(-2px, -2px);
-    box-shadow: 4px 4px 0 var(--accent);
-  }
-
-  .btn-ghost {
-    border: 1px solid var(--border);
-    color: var(--text);
-    background: var(--surface);
-  }
-  .btn-ghost:hover {
-    border-color: var(--accent);
-    color: var(--accent);
-    transform: translate(-2px, -2px);
-    box-shadow: 4px 4px 0 rgba(0,255,208,0.2);
-  }
-
-  .scroll-hint {
-    position: absolute;
-    bottom: 40px;
-    left: 6vw;
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    color: var(--muted);
-    font-size: 11px;
-    letter-spacing: 0.1em;
-    animation: fadeUp 1s 0.9s ease forwards;
-    opacity: 0;
-  }
-  .scroll-hint::before {
-    content: '';
-    width: 40px;
-    height: 1px;
-    background: var(--muted);
-    display: block;
-  }
-
-  /* ——— SECTIONS ——— */
-  section {
-    position: relative;
-    z-index: 1;
-    padding: 100px 6vw;
-    border-top: 1px solid var(--border);
-  }
-
-  .sec-label {
-    font-size: 11px;
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-    color: var(--accent);
-    margin-bottom: 48px;
-    display: flex;
-    align-items: center;
-    gap: 16px;
-  }
-  .sec-label::after {
-    content: '';
-    height: 1px;
-    width: 60px;
-    background: var(--accent);
-    display: block;
-  }
-
-  /* ——— ABOUT ——— */
-  .about-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 60px;
-    align-items: start;
-  }
-
-  .about-text {
-    font-size: 15px;
-    line-height: 1.9;
-    color: var(--muted);
-  }
-  .about-text strong { color: var(--text); }
-
-  .info-cards {
-    display: flex;
-    flex-direction: column;
-    gap: 2px;
-  }
-
-  .info-row {
-    display: flex;
-    align-items: center;
-    gap: 16px;
-    padding: 16px 20px;
-    background: var(--surface);
-    border-left: 2px solid transparent;
-    transition: all 0.2s;
-    text-decoration: none;
-    color: inherit;
-    cursor: none;
-  }
-  .info-row:hover {
-    border-left-color: var(--accent);
-    background: var(--surface2);
-  }
-
-  .info-label {
-    font-size: 10px;
-    letter-spacing: 0.15em;
-    text-transform: uppercase;
-    color: var(--muted);
-    min-width: 80px;
-  }
-  .info-val {
-    font-size: 13px;
-    color: var(--text);
-  }
-  a.info-row .info-val { color: var(--accent); }
-
-  /* ——— SKILLS ——— */
-  .skills-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: 2px;
-  }
-
-  .skill-card {
-    background: var(--surface);
-    padding: 32px;
-    position: relative;
-    overflow: hidden;
-    transition: all 0.3s ease;
-    border: 1px solid transparent;
-  }
-  .skill-card::before {
-    content: '';
-    position: absolute;
-    top: 0; left: 0;
-    width: 100%; height: 2px;
-    background: linear-gradient(90deg, var(--accent), transparent);
-    transform: scaleX(0);
-    transform-origin: left;
-    transition: transform 0.3s ease;
-  }
-  .skill-card:hover {
-    border-color: var(--border);
-    transform: translateY(-4px);
-  }
-  .skill-card:hover::before {
-    transform: scaleX(1);
-  }
-
-  .skill-icon {
-    font-size: 32px;
-    margin-bottom: 16px;
-    display: block;
-  }
-  .skill-title {
-    font-family: var(--font-display);
-    font-size: 18px;
-    font-weight: 700;
-    color: var(--text);
-    margin-bottom: 10px;
-  }
-  .skill-desc {
-    font-size: 12px;
-    color: var(--muted);
-    line-height: 1.7;
-  }
-
-  .skill-level {
-    display: flex;
-    gap: 4px;
-    margin-top: 20px;
-  }
-  .dot {
-    width: 6px; height: 6px;
-    border-radius: 50%;
-    background: var(--border);
-    border: 1px solid var(--muted);
-  }
-  .dot.on { background: var(--accent); border-color: var(--accent); }
-  .dot.on2 { background: var(--accent2); border-color: var(--accent2); }
-  .dot.on3 { background: var(--accent3); border-color: var(--accent3); }
-
-  /* ——— PROJECTS ——— */
-  .projects-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
-    gap: 2px;
-  }
-
-  .project-card {
-    background: var(--surface);
-    padding: 40px;
-    position: relative;
-    overflow: hidden;
-    border: 1px solid transparent;
-    transition: all 0.3s;
-    text-decoration: none;
-    color: inherit;
-    display: block;
-    cursor: none;
-  }
-
-  .project-card::after {
-    content: '↗';
-    position: absolute;
-    top: 32px; right: 32px;
-    font-size: 20px;
-    color: var(--muted);
-    transition: all 0.3s;
-  }
-
-  .project-card:hover {
-    border-color: var(--accent);
-    transform: translate(-3px, -3px);
-    box-shadow: 6px 6px 0 rgba(0,255,208,0.1);
-  }
-  .project-card:hover::after {
-    color: var(--accent);
-    transform: translate(3px, -3px);
-  }
-
-  .project-tag {
-    font-size: 10px;
-    letter-spacing: 0.15em;
-    text-transform: uppercase;
-    color: var(--accent);
-    margin-bottom: 16px;
-    display: flex;
-    gap: 8px;
-    flex-wrap: wrap;
-  }
-  .project-tag span {
-    padding: 3px 10px;
-    border: 1px solid rgba(0,255,208,0.2);
-    border-radius: 2px;
-  }
-
-  .project-name {
-    font-family: var(--font-display);
-    font-size: 22px;
-    font-weight: 700;
-    color: var(--text);
-    margin-bottom: 12px;
-    line-height: 1.2;
-  }
-
-  .project-desc {
-    font-size: 12px;
-    color: var(--muted);
-    line-height: 1.8;
-  }
-
-  .project-glitch {
-    position: absolute;
-    bottom: -30px; right: -10px;
-    font-family: var(--font-display);
-    font-size: 80px;
-    font-weight: 800;
-    color: transparent;
-    -webkit-text-stroke: 1px rgba(0,255,208,0.05);
-    pointer-events: none;
-    letter-spacing: -0.05em;
-    line-height: 1;
-  }
-
-  /* ——— CONTACT ——— */
-  .contact-inner {
-    max-width: 700px;
-    margin: 0 auto;
-    text-align: center;
-  }
-
-  .contact-title {
-    font-family: var(--font-display);
-    font-size: clamp(36px, 6vw, 72px);
-    font-weight: 800;
-    letter-spacing: -0.03em;
-    line-height: 1;
-    margin-bottom: 24px;
-  }
-
-  .contact-sub {
-    font-size: 13px;
-    color: var(--muted);
-    line-height: 1.8;
-    margin-bottom: 48px;
-  }
-
-  .contact-links {
-    display: flex;
-    gap: 12px;
-    justify-content: center;
-    flex-wrap: wrap;
-  }
-
-  /* ——— FOOTER ——— */
-  footer {
-    border-top: 1px solid var(--border);
-    padding: 32px 6vw;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    flex-wrap: wrap;
-    gap: 16px;
-    font-size: 11px;
-    color: var(--muted);
-    position: relative;
-    z-index: 1;
-  }
-
-  /* ——— ANIMATIONS ——— */
-  @keyframes fadeUp {
-    from { opacity: 0; transform: translateY(20px); }
-    to { opacity: 1; transform: translateY(0); }
-  }
-
-  .reveal {
-    opacity: 0;
-    transform: translateY(30px);
-    transition: opacity 0.7s ease, transform 0.7s ease;
-  }
-  .reveal.visible {
-    opacity: 1;
-    transform: translateY(0);
-  }
-
-  /* ——— MOBILE ——— */
-  @media (max-width: 768px) {
-    .about-grid { grid-template-columns: 1fr; gap: 40px; }
-    .projects-grid { grid-template-columns: 1fr; }
-    header { padding: 60px 5vw; }
-    section { padding: 70px 5vw; }
-    footer { flex-direction: column; align-items: flex-start; }
-  }
-
-  /* — Nav dots — */
-  .nav-dots {
-    position: fixed;
-    right: 32px;
-    top: 50%;
-    transform: translateY(-50%);
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-    z-index: 500;
-  }
-  .nav-dot {
-    width: 6px; height: 6px;
-    border-radius: 50%;
-    background: var(--muted);
-    transition: all 0.3s;
-    cursor: none;
-  }
-  .nav-dot.active {
-    background: var(--accent);
-    box-shadow: 0 0 8px var(--accent);
-    transform: scale(1.4);
-  }
-
-  @media (max-width: 768px) { .nav-dots, .cursor, .cursor-ring { display: none; } }
-
-  /* Highlight line */
-  .highlight {
-    position: relative;
-    display: inline-block;
-    color: var(--accent);
-  }
-</style>
-</head>
-<body>
-
-<!-- Custom cursor -->
-<div class="cursor" id="cursor"></div>
-<div class="cursor-ring" id="cursorRing"></div>
-
-<!-- Nav dots -->
-<nav class="nav-dots" id="navDots">
-  <div class="nav-dot active" data-section="0"></div>
-  <div class="nav-dot" data-section="1"></div>
-  <div class="nav-dot" data-section="2"></div>
-  <div class="nav-dot" data-section="3"></div>
-</nav>
-
-<!-- ═══ HEADER ═══ -->
-<header id="sec0">
-  <div class="header-bg-text">MD</div>
-
-  <div class="badge">Available for Projects</div>
-
-  <h1>
-    <span class="first">Mohammad</span>
-    <span class="last">Dagamseh</span>
-  </h1>
-
-  <p class="tagline">
-    Software Engineering student @ Amman Arab University.<br>
-    Hardware hacker. Embedded systems builder. Code architect.
-  </p>
-
-  <div class="header-links">
-    <a href="https://github.com/mhmd-dagamseh" target="_blank" class="btn btn-primary">
-      <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/></svg>
-      GitHub
-    </a>
-    <a href="mailto:mhmd.dagamseh.2007@gmail.com" class="btn btn-ghost">
-      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
-      Email Me
-    </a>
-    <a href="https://www.instagram.com/r6fy_" target="_blank" class="btn btn-ghost">
-      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg>
-      Instagram
-    </a>
-  </div>
-
-  <div class="scroll-hint">SCROLL TO EXPLORE</div>
-</header>
-
-<!-- ═══ ABOUT ═══ -->
-<section id="sec1">
-  <div class="sec-label">01 — About</div>
-
-  <div class="about-grid">
-    <div>
-      <p class="about-text reveal">
-        I'm a <strong>first-year Software Engineering student</strong> at Amman Arab University, born in <strong>2007</strong> — but my experience with technology goes way beyond my academic year.<br><br>
-        I build things: robots that fight, games that run in terminals, and embedded systems that interact with the physical world. My toolkit spans <strong>C++, Arduino, ESP32</strong>, and object-oriented design — all grounded in a genuine obsession with how software and hardware work together.<br><br>
-        I also dabble in <strong>web development</strong> — not an expert, but I know my way around a layout. What I'm really passionate about is low-level systems, competitive robotics, and writing clean, efficient code.
-      </p>
-    </div>
-
-    <div class="info-cards reveal">
-      <div class="info-row">
-        <span class="info-label">Name</span>
-        <span class="info-val">Mohammad Dagamseh</span>
-      </div>
-      <div class="info-row">
-        <span class="info-label">Born</span>
-        <span class="info-val">2007</span>
-      </div>
-      <div class="info-row">
-        <span class="info-label">Education</span>
-        <span class="info-val">Software Eng. — AAU</span>
-      </div>
-      <div class="info-row">
-        <span class="info-label">Year</span>
-        <span class="info-val">1st Year</span>
-      </div>
-      <div class="info-row">
-        <span class="info-label">Location</span>
-        <span class="info-val">Amman, Jordan 🇯🇴</span>
-      </div>
-      <a href="tel:+962789702007" class="info-row">
-        <span class="info-label">Phone</span>
-        <span class="info-val">+962 789 702 007</span>
-      </a>
-      <a href="mailto:mhmd.dagamseh.2007@gmail.com" class="info-row">
-        <span class="info-label">Email</span>
-        <span class="info-val">mhmd.dagamseh.2007@gmail.com</span>
-      </a>
-    </div>
-  </div>
-</section>
-
-<!-- ═══ SKILLS ═══ -->
-<section id="sec2">
-  <div class="sec-label">02 — Skills</div>
-
-  <div class="skills-grid">
-
-    <div class="skill-card reveal">
-      <span class="skill-icon">⚙️</span>
-      <div class="skill-title">Arduino & ESP32</div>
-      <p class="skill-desc">Advanced embedded systems design. Sensors, motor control, wireless communication, real-time logic. I build hardware that does exactly what code tells it to.</p>
-      <div class="skill-level">
-        <div class="dot on"></div><div class="dot on"></div><div class="dot on"></div><div class="dot on"></div><div class="dot on"></div>
-      </div>
-    </div>
-
-    <div class="skill-card reveal">
-      <span class="skill-icon">💻</span>
-      <div class="skill-title">C++ & OOP</div>
-      <p class="skill-desc">Object-oriented programming with deep understanding of classes, inheritance, polymorphism, and memory management. Writing C++ that's fast, clean, and maintainable.</p>
-      <div class="skill-level">
-        <div class="dot on"></div><div class="dot on"></div><div class="dot on"></div><div class="dot on"></div><div class="dot on2"></div>
-      </div>
-    </div>
-
-    <div class="skill-card reveal">
-      <span class="skill-icon">🤖</span>
-      <div class="skill-title">Robotics & Control</div>
-      <p class="skill-desc">Competitive sumo robot design, PID-like control, ultrasonic and IR sensing, chassis optimization. Built from scratch, tuned through iteration.</p>
-      <div class="skill-level">
-        <div class="dot on"></div><div class="dot on"></div><div class="dot on"></div><div class="dot on"></div><div class="dot on2"></div>
-      </div>
-    </div>
-
-    <div class="skill-card reveal">
-      <span class="skill-icon">🌐</span>
-      <div class="skill-title">Web Development</div>
-      <p class="skill-desc">HTML, CSS, JavaScript fundamentals. Building functional and clean web pages. Not my primary expertise — but I know enough to ship.</p>
-      <div class="skill-level">
-        <div class="dot on3"></div><div class="dot on3"></div><div class="dot on3"></div><div class="dot"></div><div class="dot"></div>
-      </div>
-    </div>
-
-    <div class="skill-card reveal">
-      <span class="skill-icon">🛠</span>
-      <div class="skill-title">Problem Solving</div>
-      <p class="skill-desc">Debugging hardware-software systems, optimizing algorithms under constraints, and thinking in systems — from low-level registers to high-level architecture.</p>
-      <div class="skill-level">
-        <div class="dot on"></div><div class="dot on"></div><div class="dot on"></div><div class="dot on"></div><div class="dot on2"></div>
-      </div>
-    </div>
-
-    <div class="skill-card reveal">
-      <span class="skill-icon">📁</span>
-      <div class="skill-title">Git & GitHub</div>
-      <p class="skill-desc">Version control, open-source project management, collaborative development. All my projects are documented and version-controlled publicly.</p>
-      <div class="skill-level">
-        <div class="dot on"></div><div class="dot on"></div><div class="dot on"></div><div class="dot on2"></div><div class="dot"></div>
-      </div>
-    </div>
-
-  </div>
-</section>
-
-<!-- ═══ PROJECTS ═══ -->
-<section id="sec3">
-  <div class="sec-label">03 — Projects</div>
-
-  <div class="projects-grid">
-
-    <a class="project-card reveal" href="https://github.com/mhmd-dagamseh/Dyno-Sumo-Robot" target="_blank">
-      <div class="project-tag">
-        <span>Arduino</span>
-        <span>C++</span>
-        <span>Robotics</span>
-        <span>Hardware</span>
-      </div>
-      <div class="project-name">Dyno Sumo Robot</div>
-      <p class="project-desc">
-        A competitive sumo robot engineered for aggressive performance. Features custom sensor arrays for opponent detection and edge avoidance, optimized motor control logic, and a chassis designed for maximum push force. Built and tuned for real competition.
-      </p>
-      <div class="project-glitch">01</div>
-    </a>
-
-    <a class="project-card reveal" href="https://github.com/mhmd-dagamseh/Snake-Game-CPP" target="_blank">
-      <div class="project-tag">
-        <span>C++</span>
-        <span>OOP</span>
-        <span>Console</span>
-        <span>Game Dev</span>
-      </div>
-      <div class="project-name">Snake Game + Auth System</div>
-      <p class="project-desc">
-        A full-featured console Snake game built in C++ with a complete user authentication system — registration, login, and session management — all in the terminal. Clean OOP architecture with game logic separated from UI and data layers.
-      </p>
-      <div class="project-glitch">02</div>
-    </a>
-
-  </div>
-</section>
-
-<!-- ═══ CONTACT ═══ -->
-<section>
-  <div class="contact-inner reveal">
-    <div class="sec-label" style="justify-content:center; margin-bottom: 32px;">04 — Contact</div>
-    <div class="contact-title">
-      Let's Build<br><span style="color: var(--accent);">Something.</span>
-    </div>
-    <p class="contact-sub">
-      Open to collaborations, project ideas, internships,<br>
-      or just a good conversation about embedded systems.
-    </p>
-    <div class="contact-links">
-      <a href="mailto:mhmd.dagamseh.2007@gmail.com" class="btn btn-primary">
-        mhmd.dagamseh.2007@gmail.com
-      </a>
-      <a href="https://github.com/mhmd-dagamseh" target="_blank" class="btn btn-ghost">GitHub</a>
-      <a href="https://www.instagram.com/_r6fy" target="_blank" class="btn btn-ghost">Instagram</a>
-    </div>
-  </div>
-</section>
-
-<!-- ═══ FOOTER ═══ -->
-<footer>
-  <span>© 2025 Mohammad Dagamseh</span>
-  <span style="color: var(--accent); font-family: var(--font-mono);">m-dagamseh.me</span>
-  <span>Amman, Jordan 🇯🇴</span>
-</footer>
-
-<script>
-  // Custom cursor
-  const cursor = document.getElementById('cursor');
-  const ring = document.getElementById('cursorRing');
-  let mx = 0, my = 0, rx = 0, ry = 0;
-
-  document.addEventListener('mousemove', e => {
-    mx = e.clientX; my = e.clientY;
-    cursor.style.left = mx - 6 + 'px';
-    cursor.style.top = my - 6 + 'px';
-  });
-
-  function animateRing() {
-    rx += (mx - rx - 18) * 0.12;
-    ry += (my - ry - 18) * 0.12;
-    ring.style.left = rx + 'px';
-    ring.style.top = ry + 'px';
-    requestAnimationFrame(animateRing);
-  }
-  animateRing();
-
-  document.querySelectorAll('a, button').forEach(el => {
-    el.addEventListener('mouseenter', () => {
-      cursor.style.transform = 'scale(2)';
-      ring.style.transform = 'scale(1.5)';
-      ring.style.opacity = '0.8';
-    });
-    el.addEventListener('mouseleave', () => {
-      cursor.style.transform = 'scale(1)';
-      ring.style.transform = 'scale(1)';
-      ring.style.opacity = '0.4';
-    });
-  });
-
-  // Scroll reveal
-  const reveals = document.querySelectorAll('.reveal');
-  const obs = new IntersectionObserver(entries => {
-    entries.forEach((e, i) => {
-      if (e.isIntersecting) {
-        setTimeout(() => e.target.classList.add('visible'), i * 80);
-      }
-    });
-  }, { threshold: 0.1 });
-  reveals.forEach(el => obs.observe(el));
-
-  // Nav dots
-  const sections = ['sec0','sec1','sec2','sec3'];
-  const dots = document.querySelectorAll('.nav-dot');
-
-  const secObs = new IntersectionObserver(entries => {
-    entries.forEach(e => {
-      if (e.isIntersecting) {
-        const idx = sections.indexOf(e.target.id);
-        if (idx !== -1) {
-          dots.forEach(d => d.classList.remove('active'));
-          dots[idx]?.classList.add('active');
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mohammad Dagamseh | Software Engineer</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Cairo', 'Inter', 'sans-serif'],
+                    },
+                    colors: {
+                        primary: '#3b82f6', 
+                        darkbg: '#0f172a', 
+                        darkcard: '#1e293b', 
+                    }
+                }
+            }
         }
-      }
-    });
-  }, { threshold: 0.4 });
+    </script>
+    <style>
+        html { scroll-behavior: smooth; }
+        body { transition: background-color 0.3s, color 0.3s; }
+        .glass-nav {
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+        }
+        .profile-frame {
+            border: 4px solid #3b82f6;
+            padding: 5px;
+        }
+    </style>
+</head>
+<body class="bg-gray-50 text-slate-800 dark:bg-darkbg dark:text-slate-200 font-sans antialiased">
 
-  sections.forEach(id => {
-    const el = document.getElementById(id);
-    if (el) secObs.observe(el);
-  });
+    <!-- Navbar -->
+    <nav class="fixed w-full z-50 glass-nav bg-white/80 dark:bg-darkbg/80 border-b border-gray-200 dark:border-slate-700 transition-colors duration-300">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex-shrink-0 font-bold text-xl tracking-wider text-primary">
+                    M.Dagamseh
+                </div>
+                <div class="flex items-center gap-4">
+                    <button id="langToggle" class="text-sm font-semibold hover:text-primary transition-colors cursor-pointer">
+                        EN
+                    </button>
+                    <button id="themeToggle" class="p-2 rounded-full hover:bg-gray-200 dark:hover:bg-slate-700 transition-colors">
+                        <i class="fas fa-moon dark:hidden"></i>
+                        <i class="fas fa-sun hidden dark:block text-yellow-400"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
 
-  dots.forEach((dot, i) => {
-    dot.addEventListener('click', () => {
-      document.getElementById(sections[i])?.scrollIntoView({ behavior: 'smooth' });
-    });
-  });
-</script>
+    <!-- Hero Section -->
+    <section class="pt-32 pb-20 px-4">
+        <div class="max-w-6xl mx-auto flex flex-col-reverse md:flex-row items-center gap-12">
+            <div class="flex-1 text-center md:text-start">
+                <p class="text-primary font-semibold mb-2 text-lg" data-i18n="hero_greeting">مرحباً، أنا</p>
+                <h1 class="text-4xl md:text-6xl font-bold mb-4 text-slate-900 dark:text-white" data-i18n="hero_name">محمد دقامسة</h1>
+                <h2 class="text-xl md:text-2xl text-slate-600 dark:text-slate-400 mb-6" data-i18n="hero_title">طالب هندسة برمجيات | عضو IEEE | مبتكر طموح</h2>
+                <p class="text-lg text-slate-600 dark:text-slate-400 mb-8 max-w-2xl leading-relaxed" data-i18n="hero_desc">
+                    طالب في السنة الأولى بجامعة عمان العربية (مواليد 2007). أمتلك شغفاً حقيقياً في عالم البرمجة، وأركز بشكل كبير على مهارة حل المشكلات لأنها الجوهر الحقيقي لأي مهندس يطمح للوصول إلى الشركات التقنية العالمية الفخمة.
+                </p>
+                <div class="flex flex-wrap justify-center md:justify-start gap-4 text-sm mb-8">
+                    <span class="flex items-center gap-2 bg-slate-200 dark:bg-slate-800 px-4 py-2 rounded-full">
+                        <i class="fas fa-envelope text-primary"></i>
+                        mhmd.dagamseh.2007@gmail.com
+                    </span>
+                    <span class="flex items-center gap-2 bg-slate-200 dark:bg-slate-800 px-4 py-2 rounded-full">
+                        <i class="fas fa-map-marker-alt text-primary"></i>
+                        الزرقاء، الأردن
+                    </span>
+                </div>
+                <div class="flex flex-wrap justify-center md:justify-start gap-4">
+                    <a href="projects.html" class="px-6 py-3 bg-primary text-white font-semibold rounded-lg hover:bg-blue-700 transition-colors shadow-lg shadow-blue-500/30" data-i18n="btn_projects">
+                        تصفح مشاريعي
+                    </a>
+                    <a href="https://github.com/mhmd-dagamseh" target="_blank" class="px-6 py-3 bg-slate-200 dark:bg-slate-800 text-slate-900 dark:text-white font-semibold rounded-lg hover:bg-slate-300 dark:hover:bg-slate-700 transition-colors flex items-center gap-2">
+                        <i class="fab fa-github text-xl"></i>
+                        <span data-i18n="btn_github">جيت هاب</span>
+                    </a>
+                </div>
+            </div>
+            <div class="flex-1 flex justify-center">
+                <div class="relative w-64 h-64 md:w-80 md:h-80">
+                    <img src="img/1.png" alt="Mohammad Dagamseh" class="w-full h-full object-cover rounded-full profile-frame shadow-2xl shadow-blue-500/20" onerror="this.src='https://via.placeholder.com/300?text=MD'">
+                    <!-- University Logo Overlay -->
+                    <div class="absolute -bottom-4 -right-4 bg-white dark:bg-slate-800 p-2 rounded-xl shadow-lg border border-gray-100 dark:border-slate-700">
+                        <img src="img/2.png" alt="Amman Arab University" class="h-12 w-auto" onerror="this.style.display='none'">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- IEEE & Ambition Section -->
+    <section id="ieee" class="py-20 bg-white dark:bg-darkcard transition-colors duration-300 px-4">
+        <div class="max-w-6xl mx-auto">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+                <div class="order-2 md:order-1">
+                    <img src="img/4.png" alt="IEEE Certificate" class="rounded-2xl shadow-2xl border-4 border-primary/20" onerror="this.src='https://via.placeholder.com/600x400?text=IEEE+Certificate'">
+                </div>
+                <div class="order-1 md:order-2 space-y-6">
+                    <div class="flex items-center gap-4 mb-4">
+                        <img src="img/3.png" alt="IEEE Logo" class="h-16" onerror="this.style.display='none'">
+                        <h2 class="text-3xl font-bold text-slate-900 dark:text-white" data-i18n="section_ieee">التميز من خلال IEEE</h2>
+                    </div>
+                    <p class="text-lg text-slate-600 dark:text-slate-400 leading-relaxed" data-i18n="ieee_desc">
+                        بصفتي عضواً في <strong>معهد مهندسي الكهرباء والإلكترونيات (IEEE)</strong>، أسعى دائماً لتطوير مهاراتي المهنية والتقنية من خلال الاحتكاك بأحدث ما توصلت إليه التكنولوجيا. هذه العضوية تمثل لي التزاماً بالتفوق الهندسي والابتكار المستمر.
+                    </p>
+                    <div class="bg-blue-50 dark:bg-blue-900/20 p-6 rounded-2xl border-r-4 border-primary">
+                        <h3 class="text-xl font-bold text-primary mb-3" data-i18n="ambition_title">طموحي المهني</h3>
+                        <p class="text-slate-700 dark:text-slate-300 italic leading-relaxed" data-i18n="ambition_text">
+                            "أطمح لأن أكون مهندس برمجيات مؤثراً في كبرى الشركات التقنية مثل <strong>Google</strong> أو <strong>Microsoft</strong>. هدفي هو المساهمة في بناء أنظمة ذكية تحل مشاكل حقيقية، واستغلال عضويتي في IEEE لبناء شبكة علاقات دولية تضعني على خارطة الإبداع العالمي."
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Skills Section -->
+    <section id="skills" class="py-20 bg-gray-100 dark:bg-darkcard/50 transition-colors duration-300 px-4">
+        <div class="max-w-6xl mx-auto">
+            <h2 class="text-3xl font-bold text-center mb-12 text-slate-900 dark:text-white" data-i18n="section_skills">المهارات التقنية</h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 text-center md:text-right">
+                <div class="bg-white dark:bg-darkcard p-6 rounded-2xl shadow-sm border border-gray-200 dark:border-slate-700 hover:-translate-y-2 transition-transform duration-300">
+                    <div class="w-12 h-12 bg-purple-100 dark:bg-purple-900/30 text-purple-600 dark:text-purple-400 rounded-lg flex items-center justify-center text-2xl mb-4 mx-auto md:mx-0">
+                        <i class="fas fa-brain"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-2 text-slate-900 dark:text-white">Problem Solving</h3>
+                    <p class="text-slate-600 dark:text-slate-400 text-sm" data-i18n="skill_ps_desc">المنطق وحل المشكلات هما الأساس المتين لبناء خوارزميات وأنظمة قوية.</p>
+                </div>
+                <div class="bg-white dark:bg-darkcard p-6 rounded-2xl shadow-sm border border-gray-200 dark:border-slate-700 hover:-translate-y-2 transition-transform duration-300">
+                    <div class="w-12 h-12 bg-blue-100 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400 rounded-lg flex items-center justify-center text-2xl mb-4 mx-auto md:mx-0">
+                        <i class="fas fa-laptop-code"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-2 text-slate-900 dark:text-white">C++ & OOP</h3>
+                    <p class="text-slate-600 dark:text-slate-400 text-sm" data-i18n="skill_cpp_desc">تطبيق مبادئ البرمجة الكائنية لبناء هياكل برمجية نظيفة وقابلة للتطوير.</p>
+                </div>
+                <div class="bg-white dark:bg-darkcard p-6 rounded-2xl shadow-sm border border-gray-200 dark:border-slate-700 hover:-translate-y-2 transition-transform duration-300">
+                    <div class="w-12 h-12 bg-emerald-100 dark:bg-emerald-900/30 text-emerald-600 dark:text-emerald-400 rounded-lg flex items-center justify-center text-2xl mb-4 mx-auto md:mx-0">
+                        <i class="fas fa-microchip"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-2 text-slate-900 dark:text-white">Arduino & ESP32</h3>
+                    <p class="text-slate-600 dark:text-slate-400 text-sm" data-i18n="skill_embedded_desc">القدرة على برمجة وتصميم دوائر الأنظمة المدمجة وتطوير أجهزة ذكية (IoT).</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="py-12 text-center border-t border-gray-200 dark:border-slate-800">
+        <div class="flex justify-center gap-6 mb-6">
+            <a href="https://github.com/mhmd-dagamseh" target="_blank" class="text-slate-400 hover:text-primary transition-colors text-2xl"><i class="fab fa-github"></i></a>
+            <a href="https://instagram.com/_r6fy" target="_blank" class="text-slate-400 hover:text-pink-600 transition-colors text-2xl"><i class="fab fa-instagram"></i></a>
+            <a href="mailto:mhmd.dagamseh.2007@gmail.com" class="text-slate-400 hover:text-primary transition-colors text-2xl"><i class="fas fa-envelope"></i></a>
+        </div>
+        <p class="text-slate-500 text-sm" data-i18n="footer_text">
+            &copy; 2026 محمد دقامسة. تم التصميم بشغف لمهندسي البرمجيات.
+        </p>
+    </footer>
+
+    <!-- Logic (Theme & Language Switching) -->
+    <script>
+        const translations = {
+            "ar": {
+                "hero_greeting": "مرحباً، أنا",
+                "hero_name": "محمد دقامسة",
+                "hero_title": "طالب هندسة برمجيات | عضو IEEE | مبتكر طموح",
+                "hero_desc": "طالب في السنة الأولى بجامعة عمان العربية (مواليد 2007). أمتلك شغفاً حقيقياً في عالم البرمجة، وأركز بشكل كبير على مهارة حل المشكلات لأنها الجوهر الحقيقي لأي مهندس يطمح للوصول إلى الشركات التقنية العالمية الفخمة.",
+                "btn_projects": "تصفح مشاريعي",
+                "btn_github": "جيت هاب",
+                "section_skills": "المهارات التقنية",
+                "skill_ps_desc": "المنطق وحل المشكلات هما الأساس المتين لبناء خوارزميات وأنظمة قوية.",
+                "skill_cpp_desc": "تطبيق مبادئ البرمجة الكائنية لبناء هياكل برمجية نظيفة وقابلة للتطوير.",
+                "skill_embedded_desc": "القدرة على برمجة وتصميم دوائر الأنظمة المدمجة وتطوير أجهزة ذكية (IoT).",
+                "section_ieee": "التميز من خلال IEEE",
+                "ieee_desc": "بصفتي عضواً في معهد مهندسي الكهرباء والإلكترونيات (IEEE)، أسعى دائماً لتطوير مهاراتي المهنية والتقنية من خلال الاحتكاك بأحدث ما توصلت إليه التكنولوجيا.",
+                "ambition_title": "طموحي المهني",
+                "ambition_text": "أطمح لأن أكون مهندس برمجيات مؤثراً في كبرى الشركات التقنية مثل Google أو Microsoft. هدفي هو المساهمة في بناء أنظمة ذكية تحل مشاكل حقيقية.",
+                "footer_text": "© 2026 محمد دقامسة. جميع الحقوق محفوظة."
+            },
+            "en": {
+                "hero_greeting": "Hello, I am",
+                "hero_name": "Mohammad Dagamseh",
+                "hero_title": "Software Engineering Student | IEEE Member | Ambitious Innovator",
+                "hero_desc": "First-year student at Amman Arab University (Born 2007). I have a real passion for programming and focus heavily on Problem Solving as the core to reaching top-tier tech companies.",
+                "btn_projects": "View Projects",
+                "btn_github": "GitHub",
+                "section_skills": "Technical Skills",
+                "skill_ps_desc": "Logic and problem-solving are the solid foundation for building robust algorithms and systems.",
+                "skill_cpp_desc": "Applying OOP principles to build clean and scalable software architectures.",
+                "skill_embedded_desc": "Ability to design embedded systems circuits and develop IoT devices.",
+                "section_ieee": "Excellence through IEEE",
+                "ieee_desc": "As a member of the IEEE, I constantly strive to develop my professional and technical skills by staying updated with the latest technology.",
+                "ambition_title": "Career Ambition",
+                "ambition_text": "I aspire to be an influential Software Engineer at big tech firms like Google or Microsoft. My goal is to build intelligent systems that solve real-world problems.",
+                "footer_text": "© 2026 Mohammad Dagamseh. All rights reserved."
+            }
+        };
+
+        let currentLang = 'ar';
+        const themeToggleBtn = document.getElementById('themeToggle');
+        const langToggleBtn = document.getElementById('langToggle');
+        const htmlElement = document.documentElement;
+
+        themeToggleBtn.addEventListener('click', () => {
+            htmlElement.classList.toggle('dark');
+        });
+
+        langToggleBtn.addEventListener('click', () => {
+            currentLang = currentLang === 'ar' ? 'en' : 'ar';
+            langToggleBtn.textContent = currentLang === 'ar' ? 'EN' : 'عربي';
+            htmlElement.setAttribute('dir', currentLang === 'ar' ? 'rtl' : 'ltr');
+            htmlElement.setAttribute('lang', currentLang);
+
+            document.querySelectorAll('[data-i18n]').forEach(element => {
+                const key = element.getAttribute('data-i18n');
+                if (translations[currentLang][key]) {
+                    element.textContent = translations[currentLang][key];
+                }
+            });
+        });
+    </script>
 </body>
 </html>
