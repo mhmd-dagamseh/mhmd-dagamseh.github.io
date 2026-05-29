@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>تواصل | Mohammad Abdulraheem</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@200;300;400;500;600;700&family=EB+Garamond:ital,wght@0,400;0,500;1,400&family=Cairo:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles/main.css">
+    <style>
+        body { background: var(--ink); }
+
+        .connect-page-section {
+            background: var(--ink); padding: 80px 0 72px;
+            text-align: center; position: relative; overflow: hidden;
+            min-height: calc(100vh - var(--nav-height));
+            display: flex; align-items: center; justify-content: center;
+        }
+        .connect-page-section::before {
+            content: 'CONNECT';
+            position: absolute; font-family: 'Oswald', sans-serif;
+            font-size: clamp(4em, 12vw, 9em); font-weight: 700;
+            color: rgba(255,255,255,.016);
+            top: 50%; left: 50%; transform: translate(-50%,-50%);
+            white-space: nowrap; pointer-events: none; letter-spacing: .1em;
+        }
+
+        .connect-page-section h2 { color: #fff; margin-bottom: 8px; }
+        .connect-sub {
+            display: block; font-family: 'Oswald', sans-serif;
+            font-size: .68em; font-weight: 300; letter-spacing: .34em;
+            color: var(--ink-light); text-transform: uppercase;
+            margin-bottom: 56px; direction: ltr;
+        }
+
+        /* ── SOCIALS ── */
+        .socials {
+            display: flex; justify-content: center; align-items: flex-start;
+            gap: 40px; position: relative; z-index: 2; flex-wrap: wrap;
+        }
+        .social-item { display: flex; flex-direction: column; align-items: center; gap: 12px; }
+        .social-item a { display: flex; flex-direction: column; align-items: center; gap: 12px; }
+        .social-box {
+            width: 68px; height: 68px;
+            border: 1px solid rgba(255,255,255,.1);
+            display: flex; align-items: center; justify-content: center;
+            border-radius: 50%;
+            transition: border-color var(--t) var(--ease), background var(--t) var(--ease);
+        }
+        .social-item:hover .social-box {
+            border-color: var(--accent);
+            background: rgba(13,63,168,.16);
+        }
+        .social-box svg {
+            width: 28px; height: 28px;
+            fill: rgba(255,255,255,.5);
+            transition: fill var(--t) var(--ease);
+        }
+        .social-item:hover .social-box svg { fill: #fff; }
+        .social-label {
+            font-family: 'Oswald', sans-serif; font-size: .6em; font-weight: 300;
+            letter-spacing: .3em; color: var(--ink-light);
+            text-transform: uppercase; transition: color var(--t);
+        }
+        .social-item:hover .social-label { color: rgba(255,255,255,.65); }
+
+        /* ── BLUEARK STRIP ── */
+        .blueark-strip {
+            margin-top: 72px; padding-top: 40px;
+            border-top: 1px solid rgba(255,255,255,.05);
+            position: relative; z-index: 2;
+        }
+        .blueark-strip-inner {
+            display: inline-flex; align-items: center; gap: 16px;
+            padding: 20px 32px;
+            border: 1px solid rgba(255,255,255,.08); border-radius: 6px;
+            transition: border-color var(--t);
+        }
+        .blueark-strip-inner:hover { border-color: rgba(13,63,168,.5); }
+        .blueark-logo-icon {
+            width: 44px; height: 44px; flex-shrink: 0;
+            background: var(--accent); border-radius: 6px;
+            display: flex; align-items: center; justify-content: center;
+        }
+        .blueark-logo-icon svg { width: 26px; height: 26px; }
+        .blueark-strip-text { text-align: right; }
+        .blueark-strip-name {
+            display: block; font-family: 'Oswald', sans-serif; font-weight: 700;
+            font-size: .95em; color: #fff; letter-spacing: .06em;
+        }
+        .blueark-strip-sub {
+            font-family: 'Cairo', sans-serif; font-size: .78em; color: var(--ink-light);
+        }
+
+        .footer-bar.dark-footer {
+            border-top-color: rgba(255,255,255,.05);
+            color: rgba(255,255,255,.14);
+            background: transparent;
+        }
+
+        @media (max-width: 520px) { .socials { gap: 22px; } }
+    </style>
+</head>
+<body data-page="connect">
+
+    <nav class="topnav" id="topnav">
+        <a class="nav-brand" href="index.html">
+            <span class="nav-brand-dot"></span> M. ABDULRAHEEM
+        </a>
+        <button class="nav-toggle" id="navToggle" aria-label="Toggle menu">
+            <span></span><span></span><span></span>
+        </button>
+        <div class="nav-links" id="navLinks">
+            <a class="nav-link" href="index.html" data-page="home">
+                <span class="nav-link-icon"><svg viewBox="0 0 20 20"><path d="M3 10l7-7 7 7"/><path d="M5 8.5v7.5h4v-4h2v4h4V8.5"/></svg></span> الرئيسية
+            </a>
+            <a class="nav-link" href="about.html" data-page="about">
+                <span class="nav-link-icon"><svg viewBox="0 0 20 20"><circle cx="10" cy="7" r="4"/><path d="M3 18c0-4 3.1-7 7-7s7 3 7 7"/></svg></span> عني
+            </a>
+            <a class="nav-link" href="quotes.html" data-page="quotes">
+                <span class="nav-link-icon"><svg viewBox="0 0 20 20"><path d="M4 4h4l-2 6h3l-1 6H4l2-6H3zM12 4h4l-2 6h3l-1 6h-4l2-6h-3z"/></svg></span> اقتباسات
+            </a>
+            <a class="nav-link" href="certificates.html" data-page="certificates">
+                <span class="nav-link-icon"><svg viewBox="0 0 20 20"><rect x="3" y="2" width="14" height="16" rx="2"/><circle cx="10" cy="8" r="3"/><path d="M7 13l1.5 2L10 13l1.5 2L13 13"/></svg></span> شهاداتي
+            </a>
+            <a class="nav-link active" href="connect.html" data-page="connect">
+                <span class="nav-link-icon"><svg viewBox="0 0 20 20"><circle cx="10" cy="10" r="7"/><path d="M7 10h6M10 7v6"/></svg></span> تواصل
+            </a>
+        </div>
+    </nav>
+
+    <div class="page-content">
+        <div class="connect-page-section">
+            <div class="container">
+                <h2>تواصل معي</h2>
+                <span class="connect-sub">Get In Touch</span>
+
+                <div class="socials">
+                    <!-- LinkedIn — img/icons/linkedin.png -->
+                    <div class="social-item">
+                        <a href="https://www.linkedin.com/in/mhmd-al-dagamseh-9bb639382" target="_blank" rel="noopener">
+                            <div class="social-box">
+                                <img src="img/icons/linkedin.png" alt="LinkedIn"
+                                     style="width:28px;height:28px;filter:brightness(0) saturate(100%) invert(50%);"
+                                     onerror="this.outerHTML='<svg viewBox=\'0 0 24 24\' style=\'width:28px;height:28px;fill:rgba(255,255,255,.5)\'><path d=\'M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z\'/></svg>'">
+                            </div>
+                            <span class="social-label">LinkedIn</span>
+                        </a>
+                    </div>
+
+                    <!-- GitHub — img/icons/github.png -->
+                    <div class="social-item">
+                        <a href="https://github.com/mhmd-dagamseh" target="_blank" rel="noopener">
+                            <div class="social-box">
+                                <img src="img/icons/github.png" alt="GitHub"
+                                     style="width:28px;height:28px;filter:brightness(0) saturate(100%) invert(50%);"
+                                     onerror="this.outerHTML='<svg viewBox=\'0 0 24 24\' style=\'width:28px;height:28px;fill:rgba(255,255,255,.5)\'><path d=\'M12 2C6.48 2 2 6.48 2 12c0 4.42 2.87 8.17 6.84 9.5.5.09.68-.22.68-.48v-1.7c-2.78.6-3.37-1.34-3.37-1.34-.45-1.15-1.11-1.46-1.11-1.46-.91-.62.07-.61.07-.61 1 .07 1.53 1.03 1.53 1.03.9 1.52 2.34 1.08 2.91.83.09-.65.35-1.08.63-1.33-2.22-.25-4.55-1.11-4.55-4.94 0-1.09.39-1.98 1.03-2.68-.1-.25-.45-1.27.1-2.64 0 0 .84-.27 2.75 1.02A9.56 9.56 0 0112 7.17c.85.004 1.7.11 2.5.33 1.91-1.29 2.75-1.02 2.75-1.02.55 1.37.2 2.39.1 2.64.64.7 1.03 1.59 1.03 2.68 0 3.84-2.34 4.68-4.57 4.93.36.31.68.92.68 1.85v2.74c0 .27.18.58.69.48A10.01 10.01 0 0022 12c0-5.52-4.48-10-10-10z\'/></svg>'">
+                            </div>
+                            <span class="social-label">GitHub</span>
+                        </a>
+                    </div>
+
+                    <!-- Email — img/icons/email.png -->
+                    <div class="social-item">
+                        <a href="mailto:mhmd.dagamseh.2007@gmail.com">
+                            <div class="social-box">
+                                <img src="img/icons/email.png" alt="Email"
+                                     style="width:28px;height:28px;filter:brightness(0) saturate(100%) invert(50%);"
+                                     onerror="this.outerHTML='<svg viewBox=\'0 0 24 24\' fill=\'none\' stroke=\'currentColor\' stroke-width=\'1.8\' style=\'width:28px;height:28px\'><rect x=\'2\' y=\'4\' width=\'20\' height=\'16\' rx=\'2\'/><polyline points=\'2,6 12,14 22,6\'/></svg>'">
+                            </div>
+                            <span class="social-label">Email</span>
+                        </a>
+                    </div>
+
+                    <!-- BlueArk — img/logos/blueark.png -->
+                    <div class="social-item">
+                        <a href="https://www.instagram.com/blueark.tm?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==" target="_blank" rel="noopener">
+                            <div class="social-box">
+                                <img src="img/logos/blueark.png" alt="BlueArk"
+                                     style="width:28px;height:28px;filter:brightness(0) saturate(100%) invert(50%);"
+                                     onerror="this.outerHTML='<svg viewBox=\'0 0 24 24\' fill=\'none\' style=\'width:28px;height:28px\'><polygon points=\'12,2 20,7 20,17 12,22 4,17 4,7\' stroke=\'currentColor\' stroke-width=\'1.6\' stroke-linejoin=\'round\' fill=\'none\'/><text x=\'12\' y=\'15.5\' text-anchor=\'middle\' fill=\'currentColor\' font-size=\'8\' font-weight=\'700\' font-family=\'Oswald,sans-serif\'>BA</text></svg>'">
+                            </div>
+                            <span class="social-label">BlueArk™</span>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- BlueArk identity strip — img/logos/blueark.png -->
+                <div class="blueark-strip">
+                    <div class="blueark-strip-inner">
+                        <div class="blueark-logo-icon">
+                            <img src="img/logos/blueark.png" alt="BlueArk"
+                                 style="width:26px;height:26px;filter:brightness(0) invert(1);"
+                                 onerror="this.outerHTML='<svg viewBox=\'0 0 32 32\' fill=\'none\' style=\'width:26px;height:26px\'><polygon points=\'16,2 28,9 28,23 16,30 4,23 4,9\' stroke=\'#fff\' stroke-width=\'1.8\' stroke-linejoin=\'round\'/><text x=\'16\' y=\'19\' text-anchor=\'middle\' fill=\'#fff\' font-size=\'10\' font-weight=\'700\' font-family=\'Oswald,sans-serif\'>BA</text></svg>'">
+                        </div>
+                        <div class="blueark-strip-text">
+                            <span class="blueark-strip-name">BlueArk™ Team</span>
+                            <span class="blueark-strip-sub">فريق تقني بقيادة Mohammad Abdulraheem</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="footer-bar dark-footer" style="margin-top:48px; padding-top:20px; border-top:1px solid rgba(255,255,255,.05);">
+                    © 2026 Mohammad Abdulraheem &nbsp;·&nbsp; BlueArk™ &nbsp;·&nbsp; All Rights Reserved
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="components/nav.js" data-page="connect"></script>
+</body>
+</html>

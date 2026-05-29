@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>شهاداتي | Mohammad Abdulraheem</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@200;300;400;500;600;700&family=EB+Garamond:ital,wght@0,400;0,500;1,400&family=Cairo:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles/main.css">
+    <style>
+        .certs-page-section {
+            padding: 80px 0 88px; background: #fff;
+            min-height: calc(100vh - var(--nav-height) - 120px);
+        }
+        .section-header { text-align: center; margin-bottom: 56px; }
+        .section-header h2 { color: var(--ink); }
+        .section-header p { max-width: 460px; margin: 10px auto 0; }
+
+        /* ── CERT GRID ── */
+        .certs-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 20px;
+        }
+
+        .cert-card {
+            background: var(--off-white); border-radius: 8px;
+            overflow: hidden; border: 1px solid #e8e5df;
+            transition: box-shadow var(--t) var(--ease), transform var(--t) var(--ease);
+            cursor: pointer;
+        }
+        .cert-card:hover {
+            box-shadow: 0 10px 34px rgba(0,0,0,.08);
+            transform: translateY(-3px);
+        }
+        .cert-thumb {
+            width: 100%; height: 180px;
+            background: linear-gradient(135deg, #e8e4da 0%, #d5cfc0 100%);
+            display: flex; align-items: center; justify-content: center;
+            position: relative; overflow: hidden;
+        }
+        .cert-thumb-icon { width: 56px; height: 56px; opacity: .5; }
+        .cert-thumb-icon svg { width: 56px; height: 56px; fill: none; stroke: var(--ink-mid); stroke-width: 1.4; }
+        .cert-thumb-img { width: 100%; height: 180px; object-fit: cover; display: block; }
+        .cert-badge {
+            position: absolute; top: 12px; left: 12px;
+            padding: 4px 10px;
+            background: var(--accent); color: #fff;
+            font-family: 'Oswald', sans-serif; font-size: .55em;
+            font-weight: 500; letter-spacing: .14em; text-transform: uppercase;
+            border-radius: 2px;
+        }
+        .cert-badge.gold { background: var(--gold); }
+        .cert-info { padding: 18px 20px 20px; }
+        .cert-info h4 { color: var(--ink); margin-bottom: 6px; font-size: .8em; }
+        .cert-info .cert-org { font-family: 'Cairo', sans-serif; font-size: .78em; color: var(--ink-mid); display: block; }
+        .cert-info .cert-desc { font-family: 'Cairo', sans-serif; font-size: .76em; color: var(--ink-light); margin-top: 6px; line-height: 1.5; }
+        .cert-info .cert-date-sm { font-family: 'Cairo', sans-serif; font-size: .7em; color: var(--ink-light); margin-top: 4px; }
+
+        /* ── IEEE FEATURED CARD ── */
+        .cert-card.ieee-card .cert-thumb { background: linear-gradient(135deg, #0d3fa8 0%, #1a5fd4 100%); }
+        .cert-card.ieee-card .cert-thumb-icon { opacity: .8; }
+        .cert-card.ieee-card .cert-thumb-icon svg { stroke: #fff; }
+
+        /* ── IEEE MEMBERSHIP CARD ── */
+        .ieee-membership-section {
+            margin-bottom: 56px;
+        }
+        .ieee-membership-section h3 {
+            font-family: 'Oswald', sans-serif;
+            font-size: .72em; font-weight: 400;
+            letter-spacing: .32em; text-transform: uppercase;
+            color: var(--accent); margin-bottom: 18px;
+        }
+        .ieee-membership-card {
+            border-radius: 10px; overflow: hidden;
+            border: 1px solid #e8e5df;
+            box-shadow: 0 4px 20px rgba(0,0,0,.06);
+            max-width: 680px;
+        }
+        .ieee-membership-card img {
+            width: 100%; display: block; height: auto;
+        }
+        .ieee-membership-placeholder {
+            background: linear-gradient(135deg, #0d3fa8 0%, #1a5fd4 100%);
+            height: 200px; display: flex; align-items: center; justify-content: center;
+            flex-direction: column; gap: 10px; color: rgba(255,255,255,.7);
+            font-family: 'Cairo', sans-serif; font-size: .9em;
+        }
+        .ieee-membership-placeholder svg { width: 48px; height: 48px; opacity: .6; }
+
+        /* ── PDF CERTIFICATES SECTION ── */
+        .pdf-certs-section { margin-top: 72px; }
+        .pdf-certs-section > h3 {
+            font-family: 'Oswald', sans-serif;
+            font-size: .72em; font-weight: 400;
+            letter-spacing: .32em; text-transform: uppercase;
+            color: var(--accent); margin-bottom: 18px;
+        }
+        .pdf-certs-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+            gap: 18px;
+        }
+        .pdf-cert-card {
+            background: var(--off-white); border-radius: 8px;
+            border: 1px solid #e8e5df;
+            overflow: hidden;
+            transition: box-shadow var(--t) var(--ease), transform var(--t) var(--ease);
+            cursor: pointer;
+        }
+        .pdf-cert-card:hover {
+            box-shadow: 0 8px 28px rgba(0,0,0,.09);
+            transform: translateY(-3px);
+        }
+        .pdf-cert-thumb {
+            width: 100%; height: 140px;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            display: flex; align-items: center; justify-content: center;
+            position: relative;
+        }
+        .pdf-cert-thumb svg { width: 42px; height: 42px; opacity: .55; fill: #fff; }
+        .pdf-cert-num {
+            position: absolute; top: 10px; right: 10px;
+            background: var(--accent); color: #fff;
+            font-family: 'Oswald', sans-serif; font-size: .52em;
+            font-weight: 600; letter-spacing: .1em;
+            padding: 3px 9px; border-radius: 2px;
+        }
+        .pdf-cert-info { padding: 14px 16px 16px; }
+        .pdf-cert-info h4 {
+            color: var(--ink); font-size: .78em; margin-bottom: 10px;
+            font-family: 'Cairo', sans-serif; font-weight: 600;
+        }
+        .pdf-cert-actions { display: flex; gap: 8px; }
+        .pdf-btn {
+            flex: 1; padding: 7px 0;
+            font-family: 'Oswald', sans-serif; font-size: .58em;
+            font-weight: 400; letter-spacing: .18em; text-transform: uppercase;
+            border-radius: 3px; border: none; cursor: pointer;
+            text-decoration: none; text-align: center; display: block;
+            transition: background var(--t), color var(--t);
+        }
+        .pdf-btn-view {
+            background: var(--accent); color: #fff;
+        }
+        .pdf-btn-view:hover { background: #0a3490; }
+        .pdf-btn-dl {
+            background: transparent; color: var(--ink-mid);
+            border: 1px solid #d5d5d5;
+        }
+        .pdf-btn-dl:hover { border-color: var(--accent); color: var(--accent); }
+
+        /* ── PDF VIEWER MODAL ── */
+        .pdf-modal-overlay {
+            display: none; position: fixed; inset: 0;
+            background: rgba(0,0,0,.82); z-index: 9999;
+            align-items: center; justify-content: center;
+            padding: 24px;
+        }
+        .pdf-modal-overlay.open { display: flex; }
+        .pdf-modal {
+            background: #1a1a1a; border-radius: 10px;
+            width: 100%; max-width: 860px;
+            max-height: 90vh; display: flex; flex-direction: column;
+            overflow: hidden; box-shadow: 0 24px 80px rgba(0,0,0,.6);
+        }
+        .pdf-modal-header {
+            display: flex; align-items: center; justify-content: space-between;
+            padding: 14px 20px;
+            border-bottom: 1px solid rgba(255,255,255,.08);
+        }
+        .pdf-modal-title {
+            font-family: 'Oswald', sans-serif; font-size: .75em;
+            font-weight: 400; letter-spacing: .24em; text-transform: uppercase;
+            color: rgba(255,255,255,.7);
+        }
+        .pdf-modal-close {
+            width: 32px; height: 32px; border-radius: 50%;
+            background: rgba(255,255,255,.06); border: none; cursor: pointer;
+            color: rgba(255,255,255,.6); font-size: 1.1em;
+            display: flex; align-items: center; justify-content: center;
+            transition: background var(--t), color var(--t);
+        }
+        .pdf-modal-close:hover { background: rgba(255,255,255,.14); color: #fff; }
+        .pdf-modal-body { flex: 1; overflow: hidden; min-height: 0; }
+        .pdf-modal-body iframe {
+            width: 100%; height: 100%; min-height: 70vh;
+            border: none; display: block;
+        }
+        .pdf-empty-msg {
+            text-align: center; padding: 60px 20px;
+            font-family: 'Cairo', sans-serif; font-size: .9em;
+            color: var(--ink-light);
+        }
+        .pdf-empty-msg svg { width: 52px; height: 52px; opacity: .25; margin-bottom: 14px; display: block; margin-inline: auto; }
+
+        @media (max-width: 860px) { .certs-grid { grid-template-columns: 1fr 1fr; } .pdf-certs-grid { grid-template-columns: 1fr 1fr; } }
+        @media (max-width: 520px) { .certs-grid { grid-template-columns: 1fr; } .pdf-certs-grid { grid-template-columns: 1fr; } }
+    </style>
+</head>
+<body data-page="certificates">
+
+    <nav class="topnav light" id="topnav">
+        <a class="nav-brand" href="index.html">
+            <span class="nav-brand-dot"></span> M. ABDULRAHEEM
+        </a>
+        <button class="nav-toggle" id="navToggle" aria-label="Toggle menu">
+            <span></span><span></span><span></span>
+        </button>
+        <div class="nav-links" id="navLinks">
+            <a class="nav-link" href="index.html" data-page="home">
+                <span class="nav-link-icon"><svg viewBox="0 0 20 20"><path d="M3 10l7-7 7 7"/><path d="M5 8.5v7.5h4v-4h2v4h4V8.5"/></svg></span> الرئيسية
+            </a>
+            <a class="nav-link" href="about.html" data-page="about">
+                <span class="nav-link-icon"><svg viewBox="0 0 20 20"><circle cx="10" cy="7" r="4"/><path d="M3 18c0-4 3.1-7 7-7s7 3 7 7"/></svg></span> عني
+            </a>
+            <a class="nav-link" href="quotes.html" data-page="quotes">
+                <span class="nav-link-icon"><svg viewBox="0 0 20 20"><path d="M4 4h4l-2 6h3l-1 6H4l2-6H3zM12 4h4l-2 6h3l-1 6h-4l2-6h-3z"/></svg></span> اقتباسات
+            </a>
+            <a class="nav-link active" href="certificates.html" data-page="certificates">
+                <span class="nav-link-icon"><svg viewBox="0 0 20 20"><rect x="3" y="2" width="14" height="16" rx="2"/><circle cx="10" cy="8" r="3"/><path d="M7 13l1.5 2L10 13l1.5 2L13 13"/></svg></span> شهاداتي
+            </a>
+            <a class="nav-link" href="connect.html" data-page="connect">
+                <span class="nav-link-icon"><svg viewBox="0 0 20 20"><circle cx="10" cy="10" r="7"/><path d="M7 10h6M10 7v6"/></svg></span> تواصل
+            </a>
+        </div>
+    </nav>
+
+    <div class="page-content">
+        <div class="page-title-banner">
+            <span class="section-label">Certificates · شهادات</span>
+            <h2>شهاداتي وإنجازاتي</h2>
+        </div>
+
+        <div class="certs-page-section">
+            <div class="container">
+                <div class="section-header">
+                    <p>مسيرة أكاديمية ومهنية — كل شهادة خطوة نحو الاحترافية.</p>
+                </div>
+
+                <!-- ══ IEEE MEMBERSHIP ══ -->
+                <div class="ieee-membership-section">
+                    <h3>IEEE · إثبات العضوية</h3>
+                    <div class="ieee-membership-card">
+                        <!-- إذا وضعت الصورة في img/membership/ieee-membership.png ستظهر تلقائياً -->
+                        <img src="img/membership/ieee-membership.png"
+                             alt="IEEE Membership Certificate"
+                             onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                        <div class="ieee-membership-placeholder" style="display:none;">
+                            <svg viewBox="0 0 48 48" fill="none" stroke="#fff" stroke-width="1.6">
+                                <rect x="6" y="4" width="36" height="40" rx="3"/>
+                                <circle cx="24" cy="20" r="8"/>
+                                <path d="M12 36l3-3h18l3 3"/>
+                            </svg>
+                            <span>ضع صورة شهادة العضوية في <code>img/membership/ieee-membership.png</code></span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ══ CERT CARDS GRID ══ -->
+                <div class="certs-grid">
+
+                    <!-- ════════════════════════════════
+                         [CERT CARD TEMPLATE]
+                         انسخ هذا الـ block لإضافة شهادة
+                    ════════════════════════════════ -->
+                    <div class="cert-card">
+                        <div class="cert-thumb">
+                            <div class="cert-thumb-icon">
+                                <svg viewBox="0 0 56 56"><rect x="8" y="6" width="40" height="44" rx="4" fill="none" stroke="currentColor" stroke-width="1.8"/><circle cx="28" cy="22" r="8" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M18 38l3 4 4-2 3 5 3-3 4 3 3-4" fill="none" stroke="currentColor" stroke-width="1.6"/></svg>
+                            </div>
+                            <span class="cert-badge">أكاديمي</span>
+                        </div>
+                        <div class="cert-info">
+                            <h4>شهادة هندسة البرمجيات</h4>
+                            <span class="cert-org">جامعة عمان العربية</span>
+                            <p class="cert-desc">مسار هندسة البرمجيات مع التركيز على الخوارزميات وهندسة النظم.</p>
+                            <div class="cert-date-sm">٢٠٢٦</div>
+                        </div>
+                    </div>
+                    <!-- [END TEMPLATE] ↑ -->
+
+                    <div class="cert-card">
+                        <div class="cert-thumb">
+                            <div class="cert-thumb-icon">
+                                <svg viewBox="0 0 56 56"><rect x="8" y="6" width="40" height="44" rx="4" fill="none" stroke="currentColor" stroke-width="1.8"/><polyline points="18,28 25,35 38,20" fill="none" stroke="currentColor" stroke-width="2.2"/></svg>
+                            </div>
+                            <span class="cert-badge">تدريبي</span>
+                        </div>
+                        <div class="cert-info">
+                            <h4>خوارزميات متقدمة</h4>
+                            <span class="cert-org">منصة تدريبية</span>
+                            <p class="cert-desc">تصميم الخوارزميات وتحليل التعقيد وحل المسائل البرمجية.</p>
+                            <div class="cert-date-sm">٢٠٢٥</div>
+                        </div>
+                    </div>
+
+                    <!-- IEEE Card — featured blue style -->
+                    <div class="cert-card ieee-card">
+                        <div class="cert-thumb">
+                            <!-- شعار IEEE — ضعه في img/logos/ieee.png أو img/logos/ieee.png -->
+                            <img src="img/logos/ieee.png" alt="IEEE"
+                                 style="width:80px;height:auto;opacity:.85;"
+                                 onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                            <div class="cert-thumb-icon" style="display:none;">
+                                <svg viewBox="0 0 56 56">
+                                    <rect x="8" y="6" width="40" height="44" rx="4" fill="none" stroke="currentColor" stroke-width="1.8"/>
+                                    <circle cx="28" cy="24" r="10" fill="none" stroke="currentColor" stroke-width="1.8"/>
+                                    <path d="M18 40l3-3h14l3 3" fill="none" stroke="currentColor" stroke-width="1.6"/>
+                                </svg>
+                            </div>
+                            <span class="cert-badge gold">IEEE</span>
+                        </div>
+                        <div class="cert-info">
+                            <h4>IEEE Membership</h4>
+                            <span class="cert-org">IEEE Global</span>
+                            <p class="cert-desc">عضوية فاعلة في المنظمة العالمية للمهندسين الكهربائيين والإلكترونيين.</p>
+                            <div class="cert-date-sm">٢٠٢٥ - الحالي</div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <!-- ══════════════════════════════════════
+                     قسم شهادات PDF — تُضاف تلقائياً
+                     ضع ملفات PDF في: img/certs/cert-1.pdf, cert-2.pdf ...
+                ══════════════════════════════════════ -->
+                <div class="pdf-certs-section">
+                    <h3>شهاداتي · PDF Certificates</h3>
+                    <div class="pdf-certs-grid" id="pdfCertsGrid">
+                        <!-- تُملأ تلقائياً بواسطة JavaScript -->
+                    </div>
+                    <div class="pdf-empty-msg" id="pdfEmptyMsg" style="display:none;">
+                        <svg viewBox="0 0 52 52" fill="none" stroke="currentColor" stroke-width="1.4">
+                            <rect x="10" y="4" width="32" height="44" rx="4"/>
+                            <path d="M18 18h16M18 26h16M18 34h10"/>
+                        </svg>
+                        <p>لا توجد شهادات PDF بعد.<br>ضع ملفاتك في مجلد <code>img/certs/</code> باسم <code>cert-1.pdf</code>, <code>cert-2.pdf</code> ...</p>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <footer class="footer-bar">
+            © 2026 Mohammad Abdulraheem &nbsp;·&nbsp; BlueArk™ &nbsp;·&nbsp; All Rights Reserved
+        </footer>
+    </div>
+
+    <!-- ══ PDF VIEWER MODAL ══ -->
+    <div class="pdf-modal-overlay" id="pdfModal">
+        <div class="pdf-modal">
+            <div class="pdf-modal-header">
+                <span class="pdf-modal-title" id="pdfModalTitle">شهادة</span>
+                <button class="pdf-modal-close" id="pdfModalClose" aria-label="إغلاق">✕</button>
+            </div>
+            <div class="pdf-modal-body">
+                <iframe id="pdfModalFrame" src="" title="PDF Viewer"></iframe>
+            </div>
+        </div>
+    </div>
+
+    <script src="components/nav.js" data-page="certificates"></script>
+    <script>
+    // ══════════════════════════════════════════════════
+    //  نظام شهادات PDF التلقائي
+    //  لإضافة شهادة: ضع الملف في img/certs/ باسم cert-N.pdf
+    //  مثال: cert-1.pdf, cert-2.pdf, cert-3.pdf ...
+    // ══════════════════════════════════════════════════
+
+    const CERT_BASE   = 'img/certs/cert-';
+    const MAX_SCAN    = 30;   // أقصى عدد للبحث
+    const grid        = document.getElementById('pdfCertsGrid');
+    const emptyMsg    = document.getElementById('pdfEmptyMsg');
+    const modal       = document.getElementById('pdfModal');
+    const modalFrame  = document.getElementById('pdfModalFrame');
+    const modalTitle  = document.getElementById('pdfModalTitle');
+    const modalClose  = document.getElementById('pdfModalClose');
+
+    // ── فحص وجود ملف PDF بدون CORS ──
+    async function certExists(n) {
+        try {
+            const r = await fetch(`${CERT_BASE}${n}.pdf`, { method: 'HEAD' });
+            return r.ok;
+        } catch { return false; }
+    }
+
+    // ── بناء كارت PDF ──
+    function buildCard(n) {
+        const path  = `${CERT_BASE}${n}.pdf`;
+        const label = `شهادة ${n}`;
+        const card  = document.createElement('div');
+        card.className = 'pdf-cert-card';
+        card.innerHTML = `
+            <div class="pdf-cert-thumb">
+                <svg viewBox="0 0 42 42"><rect x="5" y="2" width="28" height="36" rx="3"/><path d="M10 12h18M10 18h18M10 24h12" stroke="rgba(255,255,255,.35)" stroke-width="1.6" fill="none"/></svg>
+                <span class="pdf-cert-num">#${n}</span>
+            </div>
+            <div class="pdf-cert-info">
+                <h4>${label}</h4>
+                <div class="pdf-cert-actions">
+                    <a class="pdf-btn pdf-btn-view" href="#" data-path="${path}" data-label="${label}">مشاهدة</a>
+                    <a class="pdf-btn pdf-btn-dl"   href="${path}" download="cert-${n}.pdf">تحميل</a>
+                </div>
+            </div>`;
+        // زر المشاهدة
+        card.querySelector('.pdf-btn-view').addEventListener('click', e => {
+            e.preventDefault();
+            openModal(path, label);
+        });
+        return card;
+    }
+
+    // ── فتح المودال ──
+    function openModal(path, label) {
+        modalFrame.src  = path;
+        modalTitle.textContent = label;
+        modal.classList.add('open');
+        document.body.style.overflow = 'hidden';
+    }
+
+    // ── إغلاق المودال ──
+    function closeModal() {
+        modal.classList.remove('open');
+        modalFrame.src = '';
+        document.body.style.overflow = '';
+    }
+    modalClose.addEventListener('click', closeModal);
+    modal.addEventListener('click', e => { if (e.target === modal) closeModal(); });
+    document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
+
+    // ── مسح الملفات تلقائياً عند تحميل الصفحة ──
+    (async () => {
+        let found = 0;
+        const checks = [];
+        for (let n = 1; n <= MAX_SCAN; n++) {
+            checks.push({ n, p: certExists(n) });
+        }
+        const results = await Promise.all(checks.map(c => c.p));
+        for (let i = 0; i < MAX_SCAN; i++) {
+            if (results[i]) {
+                grid.appendChild(buildCard(i + 1));
+                found++;
+            }
+        }
+        if (found === 0) emptyMsg.style.display = 'block';
+    })();
+    </script>
+</body>
+</html>

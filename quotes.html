@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>اقتباساتي | Mohammad Abdulraheem</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@200;300;400;500;600;700&family=EB+Garamond:ital,wght@0,400;0,500;1,400&family=Cairo:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles/main.css">
+    <style>
+        .quotes-page-section {
+            padding: 80px 0 88px;
+            background: var(--off-white);
+            min-height: calc(100vh - var(--nav-height) - 120px);
+        }
+        .section-header { text-align: center; margin-bottom: 60px; }
+        .section-header h2 { color: var(--ink); }
+        .section-header p { max-width: 480px; margin: 10px auto 0; }
+
+        /* ── QUOTE GRID ── */
+        .quotes-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+            gap: 24px;
+        }
+
+        /* ── QUOTE CARD — the reusable unit ──
+           To add a new quote: copy the block marked [QUOTE CARD TEMPLATE]
+           Change: .quote-body text + .quote-date text. That's it.
+        */
+        .quote-card {
+            background: #fff; border-radius: 8px;
+            padding: 36px 32px 28px;
+            position: relative;
+            box-shadow: 0 2px 16px rgba(0,0,0,.04);
+            border: 1px solid #eee;
+            transition: box-shadow var(--t) var(--ease), transform var(--t) var(--ease);
+            display: flex; flex-direction: column;
+        }
+        .quote-card:hover {
+            box-shadow: 0 10px 36px rgba(0,0,0,.09);
+            transform: translateY(-3px);
+        }
+        /* Large decorative quote mark */
+        .quote-card::before {
+            content: '"';
+            position: absolute; top: 16px; right: 24px;
+            font-family: 'Georgia', serif; font-size: 6em;
+            color: rgba(13,63,168,.07); line-height: 1;
+            pointer-events: none; user-select: none;
+        }
+        /* Optional: accent left-border variant */
+        .quote-card.featured { border-right: 4px solid var(--accent); }
+
+        .quote-body {
+            font-family: 'Cairo', sans-serif;
+            font-size: 1.1em; line-height: 1.8; color: var(--ink);
+            margin-bottom: 20px; flex-grow: 1;
+            position: relative; z-index: 1;
+        }
+        .quote-footer {
+            display: flex; align-items: center;
+            justify-content: space-between;
+            border-top: 1px solid #eee; padding-top: 16px; gap: 12px;
+        }
+        .quote-author-block { display: flex; align-items: center; gap: 10px; }
+        .quote-avatar {
+            width: 38px; height: 38px; border-radius: 50%;
+            background: var(--ink); color: #fff;
+            display: flex; align-items: center; justify-content: center;
+            font-family: 'Oswald', sans-serif; font-weight: 700;
+            font-size: .85em; letter-spacing: .04em; flex-shrink: 0;
+        }
+        .quote-author-name {
+            font-family: 'Oswald', sans-serif; font-weight: 500;
+            font-size: .82em; letter-spacing: .05em; color: var(--ink);
+        }
+        .quote-date {
+            font-family: 'Cairo', sans-serif; font-size: .72em;
+            color: var(--ink-light); white-space: nowrap;
+            display: flex; align-items: center; gap: 5px;
+        }
+        .quote-date svg {
+            width: 14px; height: 14px;
+            stroke: var(--ink-light); fill: none; stroke-width: 1.6;
+        }
+        /* Calendar SVG shorthand — reused in every card */
+        .cal-svg { display: inline-block; }
+
+        /* ── ADD PLACEHOLDER ── */
+        .quote-add-placeholder {
+            border: 2px dashed #d5d5d5; background: transparent;
+            display: flex; align-items: center; justify-content: center;
+            flex-direction: column; gap: 10px;
+            cursor: default; transition: border-color var(--t), background var(--t);
+            min-height: 200px; border-radius: 8px;
+            color: var(--ink-light);
+            font-family: 'Cairo', sans-serif; font-size: .9em;
+        }
+        .quote-add-placeholder .plus-icon {
+            width: 40px; height: 40px; border-radius: 50%;
+            background: #eee; display: flex; align-items: center;
+            justify-content: center; font-size: 1.4em; color: var(--ink-mid);
+        }
+
+        @media (max-width: 720px) { .quotes-grid { grid-template-columns: 1fr; } }
+    </style>
+</head>
+<body data-page="quotes">
+
+    <nav class="topnav light" id="topnav">
+        <a class="nav-brand" href="index.html">
+            <span class="nav-brand-dot"></span> M. ABDULRAHEEM
+        </a>
+        <button class="nav-toggle" id="navToggle" aria-label="Toggle menu">
+            <span></span><span></span><span></span>
+        </button>
+        <div class="nav-links" id="navLinks">
+            <a class="nav-link" href="index.html" data-page="home">
+                <span class="nav-link-icon"><svg viewBox="0 0 20 20"><path d="M3 10l7-7 7 7"/><path d="M5 8.5v7.5h4v-4h2v4h4V8.5"/></svg></span> الرئيسية
+            </a>
+            <a class="nav-link" href="about.html" data-page="about">
+                <span class="nav-link-icon"><svg viewBox="0 0 20 20"><circle cx="10" cy="7" r="4"/><path d="M3 18c0-4 3.1-7 7-7s7 3 7 7"/></svg></span> عني
+            </a>
+            <a class="nav-link active" href="quotes.html" data-page="quotes">
+                <span class="nav-link-icon"><svg viewBox="0 0 20 20"><path d="M4 4h4l-2 6h3l-1 6H4l2-6H3zM12 4h4l-2 6h3l-1 6h-4l2-6h-3z"/></svg></span> اقتباسات
+            </a>
+            <a class="nav-link" href="certificates.html" data-page="certificates">
+                <span class="nav-link-icon"><svg viewBox="0 0 20 20"><rect x="3" y="2" width="14" height="16" rx="2"/><circle cx="10" cy="8" r="3"/><path d="M7 13l1.5 2L10 13l1.5 2L13 13"/></svg></span> شهاداتي
+            </a>
+            <a class="nav-link" href="connect.html" data-page="connect">
+                <span class="nav-link-icon"><svg viewBox="0 0 20 20"><circle cx="10" cy="10" r="7"/><path d="M7 10h6M10 7v6"/></svg></span> تواصل
+            </a>
+        </div>
+    </nav>
+
+    <div class="page-content">
+        <div class="page-title-banner">
+            <span class="section-label">Quotes · اقتباسات</span>
+            <h2>عالمي الخاص</h2>
+        </div>
+
+        <div class="quotes-page-section">
+            <div class="container">
+                <div class="section-header">
+                    <p>كلمات من نظرتي في البرمجة والحياة — أكتبها كما أعيشها.</p>
+                </div>
+
+                <div class="quotes-grid">
+
+                    <div class="quote-card">
+                        <div class="quote-body">
+                            عندما أرى الأشياء التي أتعلمها تزداد صعوبة, أعلم حينها أنها تزداد أيضا على من يتعلمون مثلي, وأتصور أن بعضهم لن يستطيع التحمل, بالتالي سأصبح من القليلين أصحاب تلك المهارة التي أتعلمها.
+                        </div>
+                        <div class="quote-footer">
+                            <div class="quote-author-block">
+                                <div class="quote-avatar">MA</div>
+                                <span class="quote-author-name">Mohammad Abdulraheem</span>
+                            </div>
+                            <span class="quote-date">
+                                <svg viewBox="0 0 18 18"><rect x="2" y="3" width="14" height="13" rx="2"/><line x1="2" y1="8" x2="16" y2="8"/><line x1="6" y1="1" x2="6" y2="5"/><line x1="12" y1="1" x2="12" y2="5"/></svg>
+                                29 May 2026
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <footer class="footer-bar">
+            © 2026 Mohammad Abdulraheem &nbsp;·&nbsp; BlueArk™ &nbsp;·&nbsp; All Rights Reserved
+        </footer>
+    </div>
+
+    <script src="components/nav.js" data-page="quotes"></script>
+</body>
+</html>
